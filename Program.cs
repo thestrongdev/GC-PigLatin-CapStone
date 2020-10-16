@@ -8,26 +8,50 @@ namespace PigLatin
         {
             bool continueGame = true;
 
-            Console.WriteLine("Welcome to the Pig Latin Translator.\n\n Please enter a word: ");
+            Console.WriteLine("Welcome to the Pig Latin Translator.");
 
             while (continueGame)
             {
-                
+
+                Console.WriteLine("/nPlease enter a word: ");
+
                 string userWord = Console.ReadLine();
-                int numLeadCons;
 
                 //conditionals for translating only one word
-                if (userWord[0] == 'a'|| userWord[0] == 'e' || userWord[0] == 'i'
-                    || userWord[0] == 'o' || userWord[0] == 'u')
+                //can we simplify the below comparison
+                if (userWord[0] == 'a' || userWord[0] == 'A'|| 
+                    userWord[0] == 'e' || userWord[0] == 'E'|| 
+                    userWord[0] == 'i' || userWord[0] == 'I'||
+                    userWord[0] == 'o' || userWord[0] == 'O'|| 
+                    userWord[0] == 'u' || userWord[0] == 'U')
                 {
                     userWord = userWord + "way";
+                    
+                    //HOW CAN I ADJUST to make the output consistent with how the user input
+                    //i.e. input = OUT; translate into OUTWAY (instead of OUTway)
+
+                    //if (char.IsUpper(userWord[0]) && char.IsUpper(userWord[1])) {
+
+                    //    userWord = userWord + "WAY";
+
+                    //} else if (char.IsUpper(userWord[0]) && char.IsLower(userWord[1]))
+                    //{
+                    //    userWord = userWord + "way";
+                    //}
+                    //else
+                    //{
+                    //    userWord = userWord + "way";
+                    //}
                 }
                 else
                 {
                     for(int i = 0; i<userWord.Length; i++)
                     {
-                        if (userWord[0] == 'a' || userWord[0] == 'e' || userWord[0] == 'i'
-                    || userWord[0] == 'o' || userWord[0] == 'u')
+                        if (userWord[0] == 'a' || userWord[0] == 'A' ||
+                            userWord[0] == 'e' || userWord[0] == 'E' ||
+                            userWord[0] == 'i' || userWord[0] == 'I' ||
+                            userWord[0] == 'o' || userWord[0] == 'O' ||
+                            userWord[0] == 'u' || userWord[0] == 'U')
                         {
                             break;
                         }
@@ -35,18 +59,19 @@ namespace PigLatin
                         {
                             userWord = userWord.Substring(1, userWord.Length - 1) + userWord[0];
                         }
-
-                        
-
                     }
+
+                    
                     userWord = userWord + "ay";
                 }
 
                 Console.WriteLine($"\nYour new word is {userWord}");
 
+                //conditionals for translating a sentence
+
                 do
                 {
-                    Console.WriteLine("Would you like to continue (y/n)?");
+                    Console.WriteLine("Would you like to translate other words (y/n)?");
 
                     ConsoleKey inputKey = Console.ReadKey().Key;
 
