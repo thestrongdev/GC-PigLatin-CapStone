@@ -20,6 +20,15 @@ namespace PigLatin
 
                 string sentence = Console.ReadLine();
 
+                //verify the user entered text!
+
+                if (sentence.Equals(""))
+                {
+                    Console.WriteLine("Please input text: ");
+                    continue;
+                }
+
+
                 string[] userWord = sentence.Split(' ');
 
                 bool titleCase = false; //a check for words with leading consonants
