@@ -17,7 +17,11 @@ namespace PigLatin
                 Console.WriteLine("\nPlease enter a word: ");
 
                 string userWord = Console.ReadLine();
+                bool titleCase = false; //a check for words with leading consonants
 
+                if (char.IsUpper(userWord[0]) && char.IsLower(userWord[1])){
+                    titleCase = true;
+                }
                 
 
                 //conditionals for translating only one word
@@ -68,7 +72,8 @@ namespace PigLatin
                         userWord = userWord + "AY";
 
                     }
-                    else if (char.IsUpper(userWord[userWord.Length-1]) && char.IsLower(userWord[1])) //title case
+                    else if (titleCase) 
+                    //title case - if the consonant 
                     {
                         userWord = userWord.Substring(0, 1).ToUpper() + userWord.Substring(1, userWord.Length - 1).ToLower() + "ay";
 
