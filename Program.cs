@@ -14,78 +14,105 @@ namespace PigLatin
             while (continueGame)
             {
 
-                Console.WriteLine("\nPlease enter a word: ");
+                //Console.WriteLine("\n\nPlease enter a word: ");
 
-                string userWord = Console.ReadLine();
+                Console.WriteLine("\n\nPlease enter a word or phrase: ");
+
+                string sentence = Console.ReadLine();
+
+                string[] userWord = sentence.Split(' ');
+
                 bool titleCase = false; //a check for words with leading consonants
 
-                if (char.IsUpper(userWord[0]) && char.IsLower(userWord[1])){
-                    titleCase = true;
-                }
-                
+                //this assumes if first character is upper and second is lower than this is title case
+
+                //for a whole sentence, you'll need to put the below in a loop and change to [i][j]
+                //if (char.IsUpper(userWord[0]) && char.IsLower(userWord[1])){
+                //    titleCase = true;
+                //}
 
                 //conditionals for translating only one word
-                //can we simplify the below comparison
-                if (userWord[0] == 'a' || userWord[0] == 'A'|| 
-                    userWord[0] == 'e' || userWord[0] == 'E'|| 
-                    userWord[0] == 'i' || userWord[0] == 'I'||
-                    userWord[0] == 'o' || userWord[0] == 'O'|| 
-                    userWord[0] == 'u' || userWord[0] == 'U')
+                //can we simplify the below comparison???
+
+                //add for loop to look at all words individually within a sentence?? 
+                //should we turn (split) the sentence into a string array, run the loop then use the join method?
+
+                for (int j= 0; j < userWord.Length; j++)
                 {
-                    //userWord = userWord + "way";
 
-                    //HOW CAN I ADJUST to make the output consistent with how the user input
-                    //i.e. input = OUT; translate into OUTWAY (instead of OUTway)
-
-                    if (char.IsUpper(userWord[0]) && char.IsUpper(userWord[1])) //all uppper
+                    if (char.IsUpper(userWord[j][0]) && char.IsLower(userWord[j][1]))
                     {
-                        userWord = userWord + "WAY";
+                        titleCase = true;
+                    }
+
+                    if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
+                            userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
+                            userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
+                            userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
+                            userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                    {
+                        //userWord = userWord + "way";
+
+                        //HOW CAN I ADJUST to make the output consistent with how the user input
+                        //i.e. input = OUT; translate into OUTWAY (instead of OUTway)
+
+                        if (char.IsUpper(userWord[j][0]) && char.IsUpper(userWord[j][1])) //all uppper
+                        {
+                            userWord[j] = userWord[j] + "WAY";
+
+                        }
+                        else
+                        {
+                            userWord[j] = userWord[j] + "way"; //all lower case
+                        }
 
                     }
                     else
                     {
-                        userWord = userWord + "way"; //all lower case
-                    }
-
-                }
-                else
-                {
-                    for(int i = 0; i<userWord.Length; i++)
-                    {
-                        if (userWord[0] == 'a' || userWord[0] == 'A' ||
-                            userWord[0] == 'e' || userWord[0] == 'E' ||
-                            userWord[0] == 'i' || userWord[0] == 'I' ||
-                            userWord[0] == 'o' || userWord[0] == 'O' ||
-                            userWord[0] == 'u' || userWord[0] == 'U')
+                        for (int i = 0; i < userWord.Length; i++)
                         {
-                            break;
+                            if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
+                                userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
+                                userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
+                                userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
+                                userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                userWord[j] = userWord[j].Substring(1, userWord[j].Length - 1) + userWord[j][0];
+                            }
                         }
-                        else
+
+                        if (char.IsUpper(userWord[j][0]))
+                        //check if this was an all upper case - this assumes that if the second letter (now index 0) is upper, then entire word was upper
                         {
-                            userWord = userWord.Substring(1, userWord.Length - 1) + userWord[0];
+                            userWord[j] = userWord[j] + "AY";
+
                         }
-                    }
+                        else if (titleCase)
+                        //title case - if the consonant 
+                        {
+                            userWord[j] = userWord[j].Substring(0, 1).ToUpper() + userWord[j].Substring(1, userWord[j].Length - 1).ToLower() + "ay";
 
-                    if (char.IsUpper(userWord[0])) 
-                    //check if this was an all upper case - this assumes that if the second letter (now index 0) is upper, then entire word was upper
-                    {
-                        userWord = userWord + "AY";
-
+                        }
+                        else //all lower case
+                        {
+                            userWord[j] = userWord[j] + "ay";
+                        }
+                        //userWord = userWord + "ay";
                     }
-                    else if (titleCase) 
-                    //title case - if the consonant 
-                    {
-                        userWord = userWord.Substring(0, 1).ToUpper() + userWord.Substring(1, userWord.Length - 1).ToLower() + "ay";
-
-                    }
-                    else //all lower case
-                    {
-                        userWord = userWord + "ay";
-                    }
-                    //userWord = userWord + "ay";
                 }
 
-                Console.WriteLine($"\nYour new word is {userWord}");
+                //need to join the items in the array back into a string
+                //string s1 = string.Join(", ", array);
+
+                sentence = string.Join(" ", userWord);
+
+                //Console.WriteLine($"\nYour new word is {userWord}");
+
+                Console.WriteLine($"\nYour new word or phrase is:\n\n{sentence}");
 
                 //conditionals for translating a sentence
 
