@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PigLatin
 {
@@ -13,9 +14,11 @@ namespace PigLatin
             while (continueGame)
             {
 
-                Console.WriteLine("/nPlease enter a word: ");
+                Console.WriteLine("\nPlease enter a word: ");
 
                 string userWord = Console.ReadLine();
+
+                
 
                 //conditionals for translating only one word
                 //can we simplify the below comparison
@@ -25,23 +28,21 @@ namespace PigLatin
                     userWord[0] == 'o' || userWord[0] == 'O'|| 
                     userWord[0] == 'u' || userWord[0] == 'U')
                 {
-                    userWord = userWord + "way";
-                    
+                    //userWord = userWord + "way";
+
                     //HOW CAN I ADJUST to make the output consistent with how the user input
                     //i.e. input = OUT; translate into OUTWAY (instead of OUTway)
 
-                    //if (char.IsUpper(userWord[0]) && char.IsUpper(userWord[1])) {
+                    if (char.IsUpper(userWord[0]) && char.IsUpper(userWord[1])) //all uppper
+                    {
+                        userWord = userWord + "WAY";
 
-                    //    userWord = userWord + "WAY";
+                    }
+                    else
+                    {
+                        userWord = userWord + "way"; //all lower case
+                    }
 
-                    //} else if (char.IsUpper(userWord[0]) && char.IsLower(userWord[1]))
-                    //{
-                    //    userWord = userWord + "way";
-                    //}
-                    //else
-                    //{
-                    //    userWord = userWord + "way";
-                    //}
                 }
                 else
                 {
@@ -61,8 +62,22 @@ namespace PigLatin
                         }
                     }
 
-                    
-                    userWord = userWord + "ay";
+                    if (char.IsUpper(userWord[0])) 
+                    //check if this was an all upper case - this assumes that if the second letter (now index 0) is upper, then entire word was upper
+                    {
+                        userWord = userWord + "AY";
+
+                    }
+                    else if (char.IsUpper(userWord[userWord.Length-1]) && char.IsLower(userWord[1])) //title case
+                    {
+                        userWord = userWord.Substring(0, 1).ToUpper() + userWord.Substring(1, userWord.Length - 1).ToLower() + "ay";
+
+                    }
+                    else //all lower case
+                    {
+                        userWord = userWord + "ay";
+                    }
+                    //userWord = userWord + "ay";
                 }
 
                 Console.WriteLine($"\nYour new word is {userWord}");
@@ -71,7 +86,7 @@ namespace PigLatin
 
                 do
                 {
-                    Console.WriteLine("Would you like to translate other words (y/n)?");
+                    Console.WriteLine("\nWould you like to translate other words (y/n)?");
 
                     ConsoleKey inputKey = Console.ReadKey().Key;
 
