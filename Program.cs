@@ -47,14 +47,25 @@ namespace PigLatin
                 //should we turn (split) the sentence into a string array, run the loop then use the join method?
 
                 Regex vowels = new Regex(@"[aeiouAEIOU]");
-                Regex symbols = new Regex(@"\W|\d"); //all symbols/numbers
+                Regex symbols = new Regex(@"\W|\d"); //all symbols/numbers, but makes it difficult to allow for punctuation
+                //need to update ^^^^
+                Regex punctuation = new Regex(@"[.!?;:]"); //do a nested if stmt with the above symbol regex???
+                bool hasPunctuation = false;
 
                 for (int j= 0; j < userWord.Length; j++)
                 {
 
                     if (symbols.IsMatch(userWord[j]))
                     {
-                        continue;
+                        if (punctuation.IsMatch(userWord[j]))
+                        {
+                            hasPunctuation = true;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        
                     }
 
                     if (char.IsUpper(userWord[j][0]) && char.IsLower(userWord[j][1]))
