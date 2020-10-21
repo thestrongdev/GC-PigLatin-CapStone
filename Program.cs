@@ -47,12 +47,15 @@ namespace PigLatin
                 //should we turn (split) the sentence into a string array, run the loop then use the join method?
 
                 Regex vowels = new Regex(@"[aeiouAEIOU]");
-                Regex emails = new Regex(@"\w+@\w+\.\w+");
-                Regex punctuation = new Regex(@"\W"); //should handle all symbols? NO
-                Regex symbol = new Regex(@"[0-9]"); //for numbers
+                Regex symbols = new Regex(@"\W|\d"); //all symbols/numbers
 
                 for (int j= 0; j < userWord.Length; j++)
                 {
+
+                    if (symbols.IsMatch(userWord[j]))
+                    {
+                        continue;
+                    }
 
                     if (char.IsUpper(userWord[j][0]) && char.IsLower(userWord[j][1]))
                     {
