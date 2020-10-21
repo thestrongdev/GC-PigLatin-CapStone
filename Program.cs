@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace PigLatin
 {
@@ -28,7 +29,6 @@ namespace PigLatin
                     continue;
                 }
 
-
                 string[] userWord = sentence.Split(' ');
 
                 bool titleCase = false; //a check for words with leading consonants
@@ -46,6 +46,11 @@ namespace PigLatin
                 //add for loop to look at all words individually within a sentence?? 
                 //should we turn (split) the sentence into a string array, run the loop then use the join method?
 
+                Regex vowels = new Regex(@"[aeiouAEIOU]");
+                Regex emails = new Regex(@"\w+@\w+\.\w+");
+                Regex punctuation = new Regex(@"\W"); //should handle all symbols? NO
+                Regex symbol = new Regex(@"[0-9]"); //for numbers
+
                 for (int j= 0; j < userWord.Length; j++)
                 {
 
@@ -54,11 +59,14 @@ namespace PigLatin
                         titleCase = true;
                     }
 
-                    if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
-                            userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
-                            userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
-                            userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
-                            userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                    //replace the below with if (Regex.IsMatch(vowels, userWord[j])
+
+                    //if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
+                    //        userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
+                    //        userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
+                    //        userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
+                    //        userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                    if (vowels.IsMatch(userWord[j][0].ToString()))
                     {
                         //userWord = userWord + "way";
 
@@ -78,15 +86,16 @@ namespace PigLatin
                     }
                     else
                     {
-                        for (int i = 0; i < userWord.Length; i++)
+                        for (int i = 0; i < userWord[j].Length; i++)
                         {
-                            if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
-                                userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
-                                userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
-                                userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
-                                userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                            //if (userWord[j][0] == 'a' || userWord[j][0] == 'A' ||
+                            //    userWord[j][0] == 'e' || userWord[j][0] == 'E' ||
+                            //    userWord[j][0] == 'i' || userWord[j][0] == 'I' ||
+                            //    userWord[j][0] == 'o' || userWord[j][0] == 'O' ||
+                            //    userWord[j][0] == 'u' || userWord[j][0] == 'U')
+                            if (vowels.IsMatch(userWord[j][0].ToString()))
                             {
-                                break;
+                                break; //end the process of moving letters to the end of the word
                             }
                             else
                             {
